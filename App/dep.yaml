@@ -21,3 +21,4 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
+# container ports are used to specify the port on which the containerized application is listening. In this case, the container is configured to listen on port 8000. This means that any traffic directed to this port will be handled by the application running inside the container.
