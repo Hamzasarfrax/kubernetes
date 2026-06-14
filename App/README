@@ -1,0 +1,92 @@
+# 🚀 Laravel Application Deployment on Kubernetes (Kind Cluster)
+
+This project demonstrates a **containerized Laravel application deployed on Kubernetes (Kind cluster)** with a separate MySQL database service.
+
+It simulates a real-world cloud-native architecture using Kubernetes Deployments, Services, and Namespace isolation.
+
+---
+
+# 🏗️ Architecture Overview
+
+---
+
+# ⚙️ Tech Stack
+
+- Laravel (PHP 8.2)
+- Docker
+- Kubernetes (Kind Cluster)
+- MySQL 8
+- kubectl
+
+---
+
+# 📦 Kubernetes Components
+
+## 🔹 Namespace
+
+- `dev` → Environment isolation
+
+## 🔹 Deployments
+
+- Laravel App Deployment (3 replicas)
+- MySQL Deployment (1 replica)
+
+## 🔹 Services
+
+- `salmatextile-service` → Exposes Laravel app
+- `db` → Internal MySQL service
+
+---
+
+# 🔄 Application Flow
+
+1. User accesses Laravel app via Kubernetes Service
+2. Service routes traffic to available pods
+3. Laravel application processes request
+4. Application connects to MySQL via internal DNS (`db`)
+5. Response is returned to user
+
+---
+
+# 🧩 Key Features
+
+- ✔ Multi-replica Laravel deployment
+- ✔ Internal service-to-service communication
+- ✔ Kubernetes DNS-based service discovery
+- ✔ Containerized MySQL database
+- ✔ Namespace-based isolation
+- ✔ kubectl debugging and logs inspection
+
+---
+
+# ⚠️ Challenges & Solutions
+
+## ❌ Issue: Database connection failure
+
+- Error: `getaddrinfo for db failed`
+- ✔ Solution: Ensured correct Kubernetes service name (`db`)
+
+---
+
+## ❌ Issue: Port-forward connection refused
+
+- ✔ Solution: Verified container port and service targetPort alignment
+
+---
+
+## ❌ Issue: Laravel migrations in pods
+
+- ✔ Solution: Used controlled startup flow with migration handling
+
+---
+
+# 🚀 How to Deploy
+
+## 1. Create namespace
+
+```bash
+kubectl apply -f namespace.yaml
+```
+
+kubectl apply -f mysql-deployment.yaml
+kubectl apply -f mysql-service.yaml

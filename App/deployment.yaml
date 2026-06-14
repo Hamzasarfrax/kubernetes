@@ -7,18 +7,32 @@ metadata:
     app: salmatextile-app
 spec:
   replicas: 3
+
   selector:
     matchLabels:
       app: salmatextile-app
+
   template:
     metadata:
       labels:
         app: salmatextile-app
+
     spec:
       containers:
         - name: salmatextile-app
-          image: docuser1122/salmatextile-app:latest
+          image: "docuser1122/salmatextile-app:latest"
           imagePullPolicy: IfNotPresent
+
+          command:
+            - sh
+            - -c
+
+          args:
+            - |
+              sleep 15 &&
+              php artisan migrate --force &&
+              php artisan db:seed --force &&
+              php artisan serve --host=0.0.0.0 --port=8000
+
           ports:
             - containerPort: 8000
-# container ports are used to specify the port on which the containerized application is listening. In this case, the container is configured to listen on port 8000. This means that any traffic directed to this port will be handled by the application running inside the container.
